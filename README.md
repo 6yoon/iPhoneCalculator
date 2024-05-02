@@ -3,6 +3,6 @@
     <span>
     - 혼합 계산 연산 순서 구현중<br>
     - AC 계산 되돌리기 구현 예정
-    </span><br>
+    </span><br><br>
     <img style="width: 300px" src="./public/iPhoneCalculator.png">
 </div>
