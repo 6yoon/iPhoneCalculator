@@ -16,43 +16,70 @@ function App() {
   const [equal, setEqual] = useState(0);
 
   function calculation(op) {
-    console.log(`modeVar${modeVar}`);
-    console.log(`modePM${modePM}`);
-    console.log(`result ${result}`);
-    console.log(`op ${op}`);
     if (modeVar !== "") {
       const preResult = formula;
       if (modeVar === "+") {
-        setFormula(preResult + Number(result));
-        setResult(`${preResult + Number(result)}`);
-        setEqual(Number(result));
-      } else if (modeVar === "-") {
-        setFormula(preResult - Number(result));
-        setResult(`${preResult - Number(result)}`);
-        setEqual(Number(result));
-      } else if (modeVar === "×") {
-        setFormula(preResult * Number(result));
-        if (op === "+" || op === "-") {
-          if (mode === "×") {
-            setResult(`${preResult * Number(result)}`);
-            if (modePM === "+")
-              setResult(`${preResult * Number(result) + equal}`);
-            else if (modePM === "-")
-              setResult(`${preResult * Number(result) - equal}`);
-          } else if (mode === "÷") {
-            setResult(`${preResult / Number(result)}`);
-            if (modePM === "+")
-              setResult(`${preResult / Number(result) + equal}`);
-            else if (modePM === "-")
-              setResult(`${preResult / Number(result) - equal}`);
-          }
+        if (op === "×" || op === "÷") {
+          setEqual(formula);
+        } else {
+          setFormula(preResult + Number(result));
+          setResult(`${preResult + Number(result)}`);
+          setEqual(Number(result));
         }
-        setEqual(Number(result));
+      } else if (modeVar === "-") {
+        if (op === "×" || op === "÷") {
+          setEqual(formula);
+        } else {
+          setFormula(preResult - Number(result));
+          setResult(`${preResult - Number(result)}`);
+          setEqual(Number(result));
+        }
+      } else if (modeVar === "×") {
+        if (op === "+" || op === "-" || op === "=") {
+          if (modePM === "+") {
+            setFormula(equal + preResult * Number(result));
+            setResult(`${equal + preResult * Number(result)}`);
+            setEqual(0);
+            setModePM("");
+          } else if (modePM === "-") {
+            setFormula(equal - preResult * Number(result));
+            setResult(`${equal - preResult * Number(result)}`);
+            if (modePM === "") setEqual(Number(result));
+            setEqual(0);
+            setModePM("");
+          } else {
+            setFormula(preResult * Number(result));
+            setResult(`${preResult * Number(result)}`);
+            if (modePM === "") setEqual(Number(result));
+          }
+        } else {
+          setFormula(preResult * Number(result));
+          setResult(`${preResult * Number(result)}`);
+          if (modePM === "") setEqual(Number(result));
+        }
       } else if (modeVar === "÷") {
-        setFormula(preResult / Number(result));
-        if (mode === "×" || mode === "÷")
+        if (op === "+" || op === "-" || op === "=") {
+          if (modePM === "+") {
+            setFormula(equal + preResult / Number(result));
+            setResult(`${equal + preResult / Number(result)}`);
+            setEqual(0);
+            setModePM("");
+          } else if (modePM === "-") {
+            setFormula(equal - preResult / Number(result));
+            setResult(`${equal - preResult / Number(result)}`);
+            if (modePM === "") setEqual(Number(result));
+            setEqual(0);
+            setModePM("");
+          }else {
+            setFormula(preResult / Number(result));
+            setResult(`${preResult / Number(result)}`);
+            if (modePM === "") setEqual(Number(result));
+          }
+        } else {
+          setFormula(preResult / Number(result));
           setResult(`${preResult / Number(result)}`);
-        setEqual(Number(result));
+          if (modePM === "") setEqual(Number(result));
+        }
       } else if (modeVar === "=") {
         if (mode === "+") {
           setFormula(preResult + equal);
@@ -68,29 +95,17 @@ function App() {
           setResult(`${preResult / equal}`);
         }
       }
-    } else {
-      if (modePM === "+") {
-        if (modeVar === "") {
-          setEqual(formula);
-        }
-      } else if (modePM === "-") {
-        setEqual(formula);
-      }
     }
   }
 
   function handleResult(e) {
-    console.log(`mode${mode}`);
-    console.log(`equal ${equal}`);
-    console.log(`formula ${formula}`);
     if (result.length === 10) {
+      return;
     } else {
       if (mode !== "") {
         setResult(`${e}`);
-        if (mode === "×" || mode === "÷") setModeVar(mode);
-        else {
-          setModePM(mode);
-        }
+        setModeVar(mode);
+        if (mode === "+" || mode === "-") setModePM(mode);
         setMode("");
       } else {
         if (result === "0") {
@@ -110,6 +125,7 @@ function App() {
       return "round orange";
     }
   }
+
   return (
     <div className="App">
       <div className="calc">
@@ -139,6 +155,8 @@ function App() {
                   handleResult,
                   modePM,
                   setModePM,
+                  setEqual,
+                  formula
                 }}
               >
                 <Line1 />

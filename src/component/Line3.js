@@ -15,7 +15,7 @@ function Line3() {
   function setMinus() {
     setMode("-");
     setFormula(Number(result));
-    if (modeVar !== "=") calculation();
+    if (modeVar !== "=") calculation("-");
   }
   return (
     <div className="line">

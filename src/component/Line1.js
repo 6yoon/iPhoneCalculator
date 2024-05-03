@@ -12,14 +12,20 @@ function Line1() {
     setModeVar,
     noWhite,
     modeVar,
-    setModePM
+    setModePM,
+    setEqual,
+    mode,
+    formula
   } = useContext(ContextBox);
   function resultClear() {
     setResult("0");
-    setFormula("");
-    setMode("");
-    setModeVar("");
-    setModePM("");
+    if(modeVar === "+" || "-" || "÷" || "×"){
+      setMode(modeVar);
+    }else if(modeVar === "="){
+      setFormula(Number(formula));
+      setModePM("");
+      setMode("");
+    }
   }
   function resultMinus() {
     if (result.length === 9) {
@@ -40,7 +46,7 @@ function Line1() {
   function setDvide() {
     setMode("÷");
     setFormula(Number(result));
-    if (modeVar !== "=") calculation();
+    if (modeVar !== "=") calculation("÷");
   }
   return (
     <div className="line">

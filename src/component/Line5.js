@@ -3,13 +3,16 @@ import { useContext } from "react";
 import { ContextBox } from "./../App.js";
 
 function Line5() {
-  let {  result,
+  let {
+    result,
     setResult,
     calculation,
     setModeVar,
     handleResult,
     setMode,
-    modeVar} = useContext(ContextBox)
+    modeVar,
+    setModePM,
+  } = useContext(ContextBox);
   function demical() {
     if (result.includes(".")) {
     } else setResult(`${result}.`);
@@ -26,9 +29,10 @@ function Line5() {
       <div
         className={"round orange"}
         onClick={() => {
-          calculation();
+          calculation("=");
           setModeVar("=");
-          if(modeVar !== "=") setMode(modeVar)
+          setModePM("=");
+          if (modeVar !== "=") setMode(modeVar);
         }}
       >
         =
