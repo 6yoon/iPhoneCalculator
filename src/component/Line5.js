@@ -12,6 +12,8 @@ function Line5() {
     setMode,
     modeVar,
     setModePM,
+    formula,
+    equal
   } = useContext(ContextBox);
   function demical() {
     if (result.includes(".")) {
@@ -31,8 +33,7 @@ function Line5() {
         onClick={() => {
           calculation("=");
           setModeVar("=");
-          setModePM("=");
-          if (modeVar !== "=") setMode(modeVar);
+          if (modeVar !== "=") setModePM(modeVar);
         }}
       >
         =

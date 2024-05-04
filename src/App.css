@@ -8,15 +8,25 @@
 
 .calc {
   display: block;
+  position: relative;
+}
+
+.iPhoneBorder {
+  width: 400px;
+  height: 700px;
+  position: absolute;
+  left: -25px;
+  top: 50px;
 }
 
 .calcBackground {
-  width: 390px;
+  width: 350px;
   height: 650px;
   background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 45px;
 }
 
 .calcBox {
@@ -44,11 +54,12 @@
   float: right;
   margin-top: 80px;
   color: #fff;
-  font-size: 60px;
+  font-size: 56px;
   font-weight: 200;
   font-family: Pretendard, sans-serif;
   margin-bottom: 12px;
 }
+
 
 .buttonBox {
   width: 100%;
@@ -68,12 +79,12 @@
 .round {
   border-radius: 50%;
   background-color: #fff;
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   margin: 5px;
   font-weight: 500;
   font-family: Pretendard, sans-serif;
-  font-size: 35px;
+  font-size: 30px;
   display: flex;
   justify-content: center;
   align-items: center;

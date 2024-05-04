@@ -15,29 +15,22 @@ function Line1() {
     setModePM,
     setEqual,
     mode,
-    formula
+    formula,
   } = useContext(ContextBox);
   function resultClear() {
-    setResult("0");
-    if(modeVar === "+" || "-" || "÷" || "×"){
-      setMode(modeVar);
-    }else if(modeVar === "="){
-      setFormula(Number(formula));
-      setModePM("");
-      setMode("");
-    }
+    setResult("");
+    setFormula(0);
+    setMode("");
+    setModeVar("");
+    setModePM("");
+    setEqual(0);
   }
   function resultMinus() {
     if (result.length === 9) {
+      return;
     } else {
-      if (result.includes("-")) {
-        setResult(`${-Number(result)}`);
-      } else {
-        if (result === "0") {
-        } else {
-          setResult(`-${result}`);
-        }
-      }
+      if (result.includes("-")) setResult(`${-Number(result)}`);
+      else setResult(`-${result}`);
     }
   }
   function resultPercent() {

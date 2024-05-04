@@ -14,6 +14,13 @@ function App() {
   const [modePM, setModePM] = useState("");
   const [formula, setFormula] = useState("");
   const [equal, setEqual] = useState(0);
+  const resultFloat = parseFloat(Number(result).toFixed(8));
+  const resultString =
+    resultFloat > 100000000
+      ? resultFloat.toExponential()
+      : `${resultFloat}`.includes(".") > 0
+      ? `${resultFloat}`
+      : `${resultFloat}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   function calculation(op) {
     if (modeVar !== "") {
@@ -44,7 +51,6 @@ function App() {
           } else if (modePM === "-") {
             setFormula(equal - preResult * Number(result));
             setResult(`${equal - preResult * Number(result)}`);
-            if (modePM === "") setEqual(Number(result));
             setEqual(0);
             setModePM("");
           } else {
@@ -67,10 +73,9 @@ function App() {
           } else if (modePM === "-") {
             setFormula(equal - preResult / Number(result));
             setResult(`${equal - preResult / Number(result)}`);
-            if (modePM === "") setEqual(Number(result));
             setEqual(0);
             setModePM("");
-          }else {
+          } else {
             setFormula(preResult / Number(result));
             setResult(`${preResult / Number(result)}`);
             if (modePM === "") setEqual(Number(result));
@@ -81,16 +86,17 @@ function App() {
           if (modePM === "") setEqual(Number(result));
         }
       } else if (modeVar === "=") {
-        if (mode === "+") {
+        console.log(`preResult${preResult}`);
+        if (modePM === "+") {
           setFormula(preResult + equal);
           setResult(`${preResult + equal}`);
-        } else if (mode === "-") {
+        } else if (modePM === "-") {
           setFormula(preResult - equal);
           setResult(`${preResult - equal}`);
-        } else if (mode === "×") {
+        } else if (modePM === "×") {
           setFormula(preResult * equal);
           setResult(`${preResult * equal}`);
-        } else if (mode === "÷") {
+        } else if (modePM === "÷") {
           setFormula(preResult / equal);
           setResult(`${preResult / equal}`);
         }
@@ -99,7 +105,7 @@ function App() {
   }
 
   function handleResult(e) {
-    if (result.length === 10) {
+    if (resultString.length === 11) {
       return;
     } else {
       if (mode !== "") {
@@ -119,8 +125,10 @@ function App() {
 
   function noWhite(op) {
     if (mode === op) {
-      if (modeVar === "=") return "round orange";
-      else return "round white";
+      if (modeVar === "=") {
+        if (modePM === "+" || "-" || "×" || "÷") return "round white";
+        else return "round orange";
+      } else return "round white";
     } else {
       return "round orange";
     }
@@ -129,16 +137,13 @@ function App() {
   return (
     <div className="App">
       <div className="calc">
-        <h1>iPhone Calculator</h1>
+        <h2>iPhone Calculator</h2>
+        <img className="iPhoneBorder" src="iPhoneBorder.png" alt="아이폰 테두리"></img>
         <div className="calcBackground">
           <div className="clacBox">
             <div className="resultBox">
-              <div
-                className={
-                  `${Number(result)}`.length < 10 ? "result" : "result2"
-                }
-              >
-                {parseFloat(Number(result).toFixed(8)).toLocaleString()}
+              <div className={resultString.length < 10 ? "result" : "result2"}>
+                {resultString}
               </div>
             </div>
             <div className="buttonBox">
@@ -156,7 +161,8 @@ function App() {
                   modePM,
                   setModePM,
                   setEqual,
-                  formula
+                  formula,
+                  equal,
                 }}
               >
                 <Line1 />
